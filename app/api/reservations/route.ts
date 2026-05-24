@@ -5,12 +5,14 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const inventory = await prisma.inventory.findFirst({
-      where: {
-        productId: body.productId,
-        warehouseId: body.warehouseId,
-      },
-    });
+    const inventory =
+      await prisma.inventory.findFirst({
+        where: {
+          productId: body.productId,
+          warehouseId:
+            body.warehouseId,
+        },
+      });
 
     if (!inventory) {
       return NextResponse.json(
@@ -20,11 +22,17 @@ export async function POST(req: Request) {
     }
 
     const availableStock =
-      inventory.totalStock - inventory.reservedStock;
+      inventory.totalStock -
+      inventory.reservedStock;
 
-    if (body.quantity > availableStock) {
+    if (
+      body.quantity > availableStock
+    ) {
       return NextResponse.json(
-        { error: "Not enough stock available" },
+        {
+          error:
+            "Not enough stock available",
+        },
         { status: 400 }
       );
     }
@@ -35,24 +43,30 @@ export async function POST(req: Request) {
       },
       data: {
         reservedStock:
-          inventory.reservedStock + body.quantity,
+          inventory.reservedStock +
+          body.quantity,
       },
     });
 
-    const reservation = await prisma.reservation.create({
-      data: {
-        productId: body.productId,
-        warehouseId: body.warehouseId,
-        quantity: body.quantity,
-        status: "reserved",
+    const reservation =
+      await prisma.reservation.create({
+        data: {
+          productId: body.productId,
+          warehouseId:
+            body.warehouseId,
+          quantity: body.quantity,
+          status: "reserved",
 
-        expiresAt: new Date(
-          Date.now() + 15 * 60 * 1000
-        ),
-      },
-    });
+          expiresAt: new Date(
+            Date.now() +
+              15 * 60 * 1000
+          ),
+        },
+      });
 
-    return NextResponse.json(reservation);
+    return NextResponse.json(
+      reservation
+    );
   } catch (err) {
     console.log(err);
 
@@ -62,6 +76,7 @@ export async function POST(req: Request) {
     );
   }
 }
+
 export async function GET() {
   try {
     const reservations =

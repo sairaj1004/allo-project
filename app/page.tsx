@@ -232,13 +232,13 @@ export default function Home() {
 
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns:
-            "1fr 350px",
+          display: "flex",
+          flexDirection: "column",
           gap: "40px",
-          alignItems: "start",
+          marginTop: "40px",
         }}
       >
+        {/* PRODUCT CARDS */}
         <div
           style={{
             display: "flex",
@@ -316,13 +316,13 @@ export default function Home() {
           )}
         </div>
 
+        {/* FORMS ROW */}
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
             gap: "25px",
-            position: "sticky",
-            top: "20px",
+            flexWrap: "wrap",
+            alignItems: "flex-start",
           }}
         >
           <ReservationForm />

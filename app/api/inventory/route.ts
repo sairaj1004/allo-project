@@ -3,12 +3,13 @@ import { prisma } from "../../../src/lib/prisma";
 
 export async function GET() {
   try {
-    const inventory = await prisma.inventory.findMany({
-      include: {
-        product: true,
-        warehouse: true,
-      },
-    });
+    const inventory =
+      await prisma.inventory.findMany({
+        include: {
+          product: true,
+          warehouse: true,
+        },
+      });
 
     return NextResponse.json(inventory);
   } catch (err) {
@@ -23,13 +24,16 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const inventory = await prisma.inventory.create({
-      data: {
-        productId: body.productId,
-        warehouseId: body.warehouseId,
-        totalStock: body.totalStock,
-      },
-    });
+    const inventory =
+      await prisma.inventory.create({
+        data: {
+          productId: body.productId,
+          warehouseId:
+            body.warehouseId,
+          totalStock:
+            body.totalStock,
+        },
+      });
 
     return NextResponse.json(inventory);
   } catch (err) {

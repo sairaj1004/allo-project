@@ -14,12 +14,15 @@ export async function POST() {
       });
 
     for (const reservation of expiredReservations) {
-      const inventory = await prisma.inventory.findFirst({
-        where: {
-          productId: reservation.productId,
-          warehouseId: reservation.warehouseId,
-        },
-      });
+      const inventory =
+        await prisma.inventory.findFirst({
+          where: {
+            productId:
+              reservation.productId,
+            warehouseId:
+              reservation.warehouseId,
+          },
+        });
 
       if (inventory) {
         await prisma.inventory.update({
